@@ -1266,6 +1266,7 @@ class openlayers_layer_type {
     return array(
       'layer_type' => get_class($this),
       'isBaseLayer' => TRUE,
+      'wrapDateLine' => TRUE,
       // TODO: Remove hard-coded resolutions
       'projection' => array('EPSG:900913'),
       'serverResolutions' => openlayers_get_resolutions('EPSG:900913'),
@@ -1303,6 +1304,13 @@ class openlayers_layer_type {
         '#description' => t('Uncheck to make this map an overlay'),
         '#default_value' => !empty($default->data['isBaseLayer']) ?
           $default->data['isBaseLayer'] : FALSE
+      ),
+      'wrapDateLine' => array(
+        '#type' => 'checkbox',
+        '#title' => t('wrapDateLine'),
+        '#description' => t(''),
+        '#default_value' => !empty($default->data['wrapDateLine']) ?
+          $default->data['wrapDateLine'] : TRUE
       ),
     );
   }
