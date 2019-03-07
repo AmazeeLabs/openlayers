@@ -122,13 +122,14 @@ class openlayers_layer_type_google extends openlayers_layer_type {
       if ($version == '2') {
         // Create URL for google include
         $url = '//' . $mapdomain . '/maps?file=api&sensor=false&v=' . $version;
-        $key = variable_get('openlayers_layers_google_api', variable_get('googlemap_api_key', ''));
-        $url .= !empty($key) ? '&key=' . $key : '';
       }
       else {
         // Create URL for google include
         $url = '//' . $mapdomain . '/maps/api/js?sensor=false&v=' . $version;
       }
+      // now keys need for both version
+      $key = variable_get('openlayers_layers_google_api', variable_get('googlemap_api_key', ''));
+      $url .= !empty($key) ? '&key=' . $key : '';
 
       $lang = variable_get('openlayers_layers_google_language', '');
       // Google v2 uses hl and v3 uses language
