@@ -63,14 +63,9 @@ class openlayers_layer_type_google extends openlayers_layer_type {
   function settings_form() {
     return array(
       'openlayers_google_version' => array(
-        '#type' => 'select',
-        '#title' => t('Google Maps API version'),
-        '#description' => t('If you use Google Maps v3, an API key is not necessary.'),
-        '#options' => array(
-          '2' => t('v2'),
-          '3.5' => t('v3.5'),
-        ),
-        '#default_value' => variable_get('openlayers_google_version', '3.5'),
+        '#type' => 'checkbox',
+        '#title' => t('Google Maps API version 2'),
+        '#default_value' => variable_get('openlayers_google_version', FALSE),
       ),
       'openlayers_layers_google_mapdomain' => array(
         '#type' => 'select',
@@ -117,22 +112,22 @@ class openlayers_layer_type_google extends openlayers_layer_type {
         '/plugins/layer_types/openlayers_layer_type_google.js');
 
       $mapdomain = variable_get('openlayers_layers_google_mapdomain', 'maps.google.com');
-      $version = variable_get('openlayers_google_version', '3.5');
+      $version = variable_get('openlayers_google_version', FALSE);
 
-      if ($version == '2') {
+      if (!empty($version)) {
         // Create URL for google include
         $url = '//' . $mapdomain . '/maps?file=api&sensor=false&v=' . $version;
       }
       else {
         // Create URL for google include
-        $url = '//' . $mapdomain . '/maps/api/js?sensor=false&v=' . $version;
+        $url = '//' . $mapdomain . '/maps/api/js?';
       }
       // now keys need for both version
       $key = variable_get('openlayers_layers_google_api', variable_get('googlemap_api_key', ''));
       $url .= !empty($key) ? '&key=' . $key : '';
 
       $lang = variable_get('openlayers_layers_google_language', '');
-      // Google v2 uses hl and v3 uses language
+      // Google v2 uses hl and v3 or major uses language
       $url .= !empty($lang) ? '&hl=' . $lang : '';
       $url .= !empty($lang) ? '&language=' . $lang : '';
 
